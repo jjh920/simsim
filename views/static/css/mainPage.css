@@ -1,0 +1,309 @@
+.no {
+    user-select: none;
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none;    /* Firefox */
+    -ms-user-select: none;     /* IE/Edge */
+}
+
+
+/* ========== Header ========== */
+header {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    opacity: 0;
+    transition: opacity 0.7s ease;
+}
+
+body.page-visible {
+    opacity: 1;
+}
+
+body.fadeout {
+    opacity: 0;
+}
+
+header .title_box {
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+    font-size: 80px;
+    font-weight: bold;
+    font-family: "Nanum Brush Script", cursive;
+    text-shadow: 4px 6px 4px black;
+}
+
+.line1 {
+    /*border: 1px solid red;*/
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+header .list_box {
+    /*border: 1px solid red;*/
+    width: 70%;
+    padding: 40px;
+    display: flex;
+    gap: 35px;
+}
+
+/* 리스트 버튼 */
+header .listbtn {
+    /*border: 1px solid red;*/
+    position: relative;          /* ✅ hover 유지 핵심 */
+    z-index: 2;                  /* ✅ dropdown-list보다 위에 보이게 */
+    margin: 30px 50px -30px -20px;
+    font-size: 40px;
+    font-weight: bold;
+    font-family: "Nanum Brush Script", cursive;
+    text-shadow: 2px 4px 3px gray;
+    transition: transform 0.2s ease; /* ✅ 부드러운 hover */
+}
+
+/* ========== 로그인 박스 ========== */
+.login_box {
+    /*border: 1px solid red;*/
+    width: 30%;
+    margin: auto;
+    display: flex;
+    gap: 50px;
+    justify-content: flex-end;
+    align-items: center;
+    font-size: 30px;
+    font-family: "Nanum Brush Script", cursive;
+    font-weight: bold;
+    text-shadow: 2px 3px 2px black;
+}
+
+/* ========== 링크 공통 스타일 ========== */
+.title_box a,
+.list_box a,
+.login_box a {
+    text-decoration: none;
+}
+
+.title_box a {
+    color: white;
+    transition: color 0.6s ease;
+}
+.title_box a:hover {
+    font-weight: bold;
+    color: black;
+}
+
+.list_box a {
+    color: whitesmoke;
+    text-shadow: 2px 3px 2px black;
+    transition: color 0.6s ease;
+}
+
+.list_box a:hover {
+    font-weight: bold;
+    color: black;
+}
+
+.login_box a {
+    color: whitesmoke;
+    text-shadow: 2px 3px 2px black;
+    transition: color 0.6s ease;
+}
+.login_box a:hover {
+    font-weight: bold;
+    color: black;
+}
+
+/* ========== Hover 애니메이션 (공통) ========== */
+.dropdown,
+.loginbtn,
+.joinbtn,
+.listbtn {
+    transition: transform 0.2s ease;
+    z-index: 999;
+}
+.dropdown:hover,
+.loginbtn:hover,
+.joinbtn:hover,
+.listbtn:hover {
+    transform: translateY(-4px);
+}
+
+/* ========== Dropdown 메뉴 ========== */
+.dropdown {
+    position: relative;
+}
+
+.dropdown_list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1; /* ✅ listbtn보다 아래 */
+    min-width: 100px;
+    padding: 0;
+    border-radius: 4px;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    font-family: "Nanum Brush Script", cursive;
+    font-size: 30px;
+    font-weight: bold;
+    transition: max-height 0.6s ease, opacity 0.6s ease, padding 0.3s ease;
+    background-color: rgba(255, 255, 255, 0.3);
+
+}
+
+.dropdown_list a {
+    display: block;
+    padding: 8px 16px;
+    color: whitesmoke;;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+.dropdown_list a:hover {
+    transform: translateY(-4px);
+}
+
+.dropdown:hover .dropdown_list {
+    max-height: 500px;
+    opacity: 1;
+    padding: 10px 0;
+}
+.dropdown:hover .listbtn {
+    color: black;
+    font-weight: bold;
+}
+
+
+
+
+
+/* 캘린더 */
+
+
+h2 {
+    text-align: center;
+    font-size: 50px;
+    text-shadow: 4px 6px 4px black;
+    font-weight: bold;
+    color: white;
+}
+
+.calendar {
+    width: 800px;
+    height: 500px;
+    margin: 40px auto;
+    border-collapse: collapse;
+    table-layout: fixed;
+    background-color: white;
+    opacity: 0.9;
+}
+
+.calendar th, .calendar td {
+    border: 1px solid #ccc;
+    width: 14.28%;
+    height: calc(500px / 6);
+    text-align: center;
+    vertical-align: top;
+    padding: 5px;
+    transition: background-color 0.3s;
+    font-family: "Nanum Brush Script", cursive;
+    font-size: 24px;
+    font-weight: bold;
+    position: relative;
+}
+
+.calendar th {
+    background-color: #f0f0f0;
+}
+
+.calendar td:hover {
+    background-color: darkseagreen;
+    cursor: pointer;
+}
+
+.empty {
+    background-color: #fafafa;
+}
+
+.sunday {
+    color: red;
+}
+
+.saturday {
+    color: blue;
+}
+
+.today {
+    color: yellow !important;
+    background-color: gray !important;
+    font-weight: bold;
+    border: 2px solid #f0b400;
+}
+
+.memo {
+    font-size: 14px;
+    margin-top: 5px;
+    color: #333;
+    word-break: break-word;
+    background-color: rgba(255,255,255,0.7);
+    padding: 2px 4px;
+    border-radius: 4px;
+}
+
+
+
+
+
+
+/* ========== 반응형 ========== */
+@media (max-width: 767px) {
+    header .title_box {
+        font-size: 36px;
+        padding: 15px;
+    }
+
+    header .list_box {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        padding: 20px;
+    }
+
+    header .listbtn {
+        font-size: 16px;
+        padding: 10px 20px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+    header .title_box {
+        font-size: 56px;
+        padding: 25px;
+    }
+
+    header .list_box {
+        gap: 20px;
+        padding: 30px;
+    }
+
+    header .listbtn {
+        font-size: 18px;
+        padding: 12px 24px;
+    }
+}
+
+/* ========== 폰트 클래스 (선택적 사용) ========== */
+.nanum-brush-script-regular {
+    font-family: "Nanum Brush Script", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+
+

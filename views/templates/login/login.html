@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>심심할땐?</title>
+
+    <!-- Bootstrap & Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+
+    <!-- Google Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Brush+Script&display=swap">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/css/mainPage.css">
+    <link rel="stylesheet" href="/static/css/login.css">
+    <link rel="stylesheet" href="/static/css/all.css">
+</head>
+<body>
+<div class="container">
+
+    <!-- HEADER START -->
+    <header>
+        <div class="title_box text-center">
+            <a href="/" class="no">Black&White</a>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main>
+        <div class="main_box">
+            <div class="login_box_box">
+                <!-- ✅ form 추가 -->
+                <form onsubmit="handleLogin(event)">
+                    <div class="info_box">
+                        <div class="name">
+                            <div class="col-auto">
+                                <label for="name" class="col-form-label">ID</label>
+                            </div>
+                            <div class="col-auto name2">
+                                <input type="text" id="name" name="name" class="form-control" autofocus required>
+                            </div>
+                        </div>
+                        <div class="pwd mt-3">
+                            <div class="col-auto">
+                                <label for="pwd" class="col-form-label">PASSWORD</label>
+                            </div>
+                            <div class="col-auto">
+                                <input type="password" id="pwd" name="pwd" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="btn_box mt-2">
+                            <div class="btn1 mt-2">
+                                <button type="submit" id="btn1" name="btn1" class="form-control btn btn-light btn-outline-dark btn-lg theme-btn--dark-inverse sqs-button-element--dark">
+                                    로그인
+                                </button>
+                            </div>
+                            <div class="btn2 mt-2">
+                                <button type="button" id="btn2" name="btn2" class="form-control btn btn-light btn-outline-dark btn-lg theme-btn--dark-inverse sqs-button-element--dark">
+                                    회원가입
+                                </button>
+                            </div>
+                            <div class="btn3 mt-2">
+                                <button type="button" class="form-control btn btn-light btn-outline-dark btn-lg theme-btn--dark-inverse sqs-button-element--dark" onClick="location.href='/'">
+                                    홈으로
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- ✅ form 끝 -->
+            </div>
+        </div>
+    </main>
+
+</div>
+
+<!-- JS 영역 -->
+<script>
+    function applyFadeIn() {
+        document.body.classList.remove('fadeout');
+        document.body.classList.remove('page-visible');
+        void document.body.offsetWidth;
+        requestAnimationFrame(() => {
+            document.body.classList.add('page-visible');
+            console.log("[FadeIn] page-visible 클래스 추가됨");
+        });
+    }
+
+    window.addEventListener('DOMContentLoaded', applyFadeIn);
+    window.addEventListener('pageshow', (e) => {
+        if (e.persisted || performance.getEntriesByType("navigation")[0]?.type === "back_forward") {
+            applyFadeIn();
+        }
+    });
+
+    function login() {
+        document.body.classList.remove('page-visible');
+        document.body.classList.add('fadeout');
+        console.log("[FadeOut] fadeout 클래스 추가됨");
+
+        setTimeout(() => {
+            location.href = "/login2";
+        }, 700);
+    }
+
+    function handleLogin(event) {
+        event.preventDefault();
+        console.log("로그인 버튼 눌림 (엔터 또는 클릭)");
+        // 실제 로그인 처리 로직 들어갈 자리
+        location.href = "/"; // 예시로 메인 페이지 이동
+    }
+</script>
+</body>
+</html>

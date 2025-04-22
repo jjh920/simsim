@@ -1,0 +1,15 @@
+html, body {
+    width: 100vw;
+    height: 100vh;
+    overflow-y: scroll; /* 항상 세로 스크롤 공간 확보 */
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Nanum Brush Script", cursive;
+    background-color: #222;
+    background-image: url('https://img.freepik.com/free-vector/abstract-background-design-dark-gray_53876-59277.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* 스크롤 시 배경 고정 */
+}

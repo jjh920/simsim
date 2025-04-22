@@ -1,0 +1,47 @@
+.login_box_box {
+    position: relative;
+    top: 30px;
+    background-color: rgba(255, 255, 255, 0.5); /* 배경만 투명하게 */
+    width: 800px;
+    height: 380px;
+    margin: auto;
+
+
+    display: flex;              /* 🔥 핵심 */
+    justify-content: center;   /* 가로 정렬 */
+    align-items: center;       /* 세로 정렬 */
+}
+
+.info_box {
+    /*border: 1px solid red;*/
+    background-color: white;
+    width: 750px;
+    height: 300px;
+    padding: 30px;
+    box-sizing: border-box;    /* padding 포함한 전체 크기 계산 */
+    font-size: 24px;
+    /*font-weight: bold;*/
+}
+.name2 {
+    font-family: Arial, sans-serif;
+}
+
+.btn_box {
+    display: flex;
+    /*flex-direction: column; !* 수직 정렬 *!*/
+    align-items: center;     /* 가운데 정렬 */
+    gap: 10px;               /* 버튼 간 여백 */
+    margin-top: 30px;
+}
+
+.btn_box > div {
+    width: 100%;             /* 부모 form-control 버튼에 맞춤 */
+    max-width: 300px;        /* 너무 넓어지는 것 방지 */
+}
+
+.btn_box button {
+    font-weight: 700;
+    text-align: center;
+    margin: 0;            /* ✅ 버튼 주변 여백 제거 */
+    vertical-align: middle; /* ✅ 수직 정렬 통일 */
+}

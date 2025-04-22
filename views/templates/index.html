@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>심심할땐?</title>
+
+    <!-- Bootstrap & Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+
+    <!-- 구글 아이콘 & 폰트 -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Brush+Script&display=swap" rel="stylesheet">
+
+    <!-- 사용자 정의 CSS -->
+    <link rel="stylesheet" href="/static/css/mainPage.css">
+    <link rel="stylesheet" href="/static/css/all.css">
+
+
+</head>
+
+<div class="container">
+
+    <!-- HEADER START -->
+    <header>
+        <div class="title_box" style="text-align: center">
+            <a href="/" class="no">Black&White</a>
+        </div>
+        <div class="line1">
+            <div class="list_box no">
+                <div class="dropdown">
+                    <a href="#" class="listbtn">리스트1</a>
+                    <div class="dropdown_list">
+                        <a href="#">해변</a>
+                        <a href="#">등산</a>
+                        <a href="#">골프</a>
+                        <a href="#">온천</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <a href="#" class="listbtn">리스트2</a>
+                    <div class="dropdown_list">
+                        <a href="#">2-1</a>
+                        <a href="#">2-2</a>
+                        <a href="#">2-3</a>
+                        <a href="#">2-4</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <a href="#" class="listbtn">리스트3</a>
+                    <div class="dropdown_list">
+                        <a href="#">3-1</a>
+                        <a href="#">3-2</a>
+                        <a href="#">3-3</a>
+                        <a href="#">3-4</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <a href="#" class="listbtn">리스트4</a>
+                    <div class="dropdown_list">
+                        <a href="#">4-1</a>
+                        <a href="#">4-2</a>
+                        <a href="#">4-3</a>
+                        <a href="#">4-4</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="login_box no">
+                <a href="javascript:void(0);" onclick="login()" class="loginbtn">로그인</a>
+                <a href="/" class="joinbtn">회원가입</a>
+            </div>
+        </div>
+    </header>
+    <!-- HEADER END -->
+
+    <!-- MAIN CONTENT -->
+    <main>
+        <div class="main_box">
+            <h2 id="calendar-title"></h2>
+            <table class="calendar" id="calendar">
+                <thead>
+                <tr>
+                    <th>일</th>
+                    <th>월</th>
+                    <th>화</th>
+                    <th>수</th>
+                    <th>목</th>
+                    <th>금</th>
+                    <th>토</th>
+                </tr>
+                </thead>
+                <tbody id="calendar-body">
+                <!-- JS로 생성됨 -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer style="text-align: center; padding: 20px; color: white;">
+        <small>&copy; 2025 심심할땐? All rights reserved.</small>
+    </footer>
+
+</div>
+
+<script>
+    function applyFadeIn() {
+        // 확실하게 초기화
+        document.body.classList.remove('fadeout');
+        document.body.classList.remove('page-visible');
+
+        // 🔥 강제 리플로우
+        void document.body.offsetWidth;
+
+        // 다음 프레임에서 fadein 적용
+        requestAnimationFrame(() => {
+            document.body.classList.add('page-visible');
+            console.log("[FadeIn] page-visible 클래스 추가됨");
+        });
+    }
+
+    window.addEventListener('DOMContentLoaded', applyFadeIn);
+
+    window.addEventListener('pageshow', (e) => {
+        console.log("[PageShow]", e.persisted);
+        if (e.persisted || performance.getEntriesByType("navigation")[0]?.type === "back_forward") {
+            applyFadeIn();  // 캐시 복원에도 다시 fadein 적용
+        }
+    });
+
+    function login() {
+        document.body.classList.remove('page-visible');
+        document.body.classList.add('fadeout');
+        console.log("[FadeOut] fadeout 클래스 추가됨");
+
+        setTimeout(() => {
+            location.href = "/login2";
+        }, 700);
+    }
+</script>
+<script>
+    function generateCalendar(year, month) {
+        const title = document.getElementById("calendar-title");
+        const tbody = document.getElementById("calendar-body");
+        const today = new Date();
+
+        const start = new Date(year, month, 1);
+        const end = new Date(year, month + 1, 0);
+        const startDay = start.getDay();
+        const totalDays = end.getDate();
+
+        title.textContent = `${year}년 ${month + 1}월`;
+        tbody.innerHTML = "";
+
+        let row = document.createElement("tr");
+
+        // 빈 셀 생성
+        for (let i = 0; i < startDay; i++) {
+            const cell = document.createElement("td");
+            cell.classList.add("empty");
+            row.appendChild(cell);
+        }
+
+        for (let day = 1; day <= totalDays; day++) {
+            const cell = document.createElement("td");
+            cell.textContent = day;
+
+            const dayOfWeek = (startDay + day - 1) % 7;
+
+            if (dayOfWeek === 0) cell.classList.add("sunday");
+            if (dayOfWeek === 6) cell.classList.add("saturday");
+
+            if (
+                year === today.getFullYear() &&
+                month === today.getMonth() &&
+                day === today.getDate()
+            ) {
+                cell.classList.add("today");
+            }
+
+            // 메모 기능 추가
+            cell.addEventListener("click", () => {
+                const memo = prompt(`${month + 1}월 ${day}일 메모를 입력하세요:`);
+                if (memo) {
+                    const memoDiv = document.createElement("div");
+                    memoDiv.textContent = memo;
+                    memoDiv.className = "memo";
+                    cell.appendChild(memoDiv);
+                }
+            });
+
+            row.appendChild(cell);
+
+            if ((startDay + day) % 7 === 0 || day === totalDays) {
+                tbody.appendChild(row);
+                row = document.createElement("tr");
+            }
+        }
+    }
+
+    const now = new Date();
+    generateCalendar(now.getFullYear(), now.getMonth());
+</script>
+
+</body>
+</html>
