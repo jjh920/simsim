@@ -1,0 +1,24 @@
+.main_box {
+    background-color: white;
+    width: 800px;
+    height: 700px;
+    margin: auto;
+}
+.info_box {
+    /*border: 1px solid red;*/
+    background-color: white;
+    width: 800px;
+    height: 300px;
+    padding: 30px;
+    box-sizing: border-box;    /* padding 포함한 전체 크기 계산 */
+    font-size: 24px;
+    /*font-weight: bold;*/
+}
+
+.joinbtn,
+.joinbtn2 {
+    text-align: center;
+    vertical-align: middle; /* ✅ 수직 정렬 통일 */
+
+}
+

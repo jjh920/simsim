@@ -1,7 +1,7 @@
 from app.models.member import Member
 from app.dbfactory import Session
 from sqlalchemy import insert
-
+from app.dbfactory import SessionLocal
 
 class MemberService():
     @staticmethod
@@ -23,7 +23,7 @@ class MemberService():
     def insert_member(mdto):
         # 변환된 회원정보를 member 테이블에 저장
         data = MemberService.member_convert(mdto)
-        with Session() as sess:
+        with SessionLocal() as sess:
             stmt = insert(Member).values(data)
             result = sess.execute(stmt)
             sess.commit()
@@ -47,3 +47,12 @@ class MemberService():
         with Session() as sess:
             result = sess.query(Member).filter_by(userid=userid).scalar()
             return result
+
+
+    @staticmethod
+    def check_userid(userid, db):
+        return db.query(Member).filter(Member.userid == userid).first() is not None
+
+    @staticmethod
+    def check_phone(phone, db):
+        return db.query(Member).filter(Member.phone == phone).first() is not None

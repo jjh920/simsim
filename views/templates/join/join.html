@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>심심할땐?</title>
+
+    <!-- CSS & Fonts -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Brush+Script&display=swap">
+    <link rel="stylesheet" href="/static/css/mainPage.css">
+    <link rel="stylesheet" href="/static/css/join.css">
+    <link rel="stylesheet" href="/static/css/all.css">
+</head>
+<body>
+<div class="container">
+
+    <!-- HEADER -->
+    <header>
+        <div class="title_box text-center">
+            <a href="/" class="no">Black&White</a>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main>
+        <div class="main_box">
+            <div class="join_box">
+                <form id="joinForm" onsubmit="return validateForm(event)">
+                    <div class="info_box">
+
+                        <!-- 아이디 -->
+                        <div class="userid mt-2">
+                            <label for="userid" class="form-label">아이디</label>
+                            <div class="input-group">
+                                <input type="text" id="userid" name="userid" class="form-control" required>
+                                <button type="button" class="btn btn-outline-secondary" onclick="checkDuplicateId()">중복 확인</button>
+                            </div>
+                        </div>
+
+                        <!-- 비밀번호 -->
+                        <div class="pwd mt-2">
+                            <label for="pwd" class="form-label">비밀번호</label>
+                            <input type="password" id="pwd" name="pwd" class="form-control" required>
+                        </div>
+
+                        <!-- 비밀번호 확인 -->
+                        <div class="repwd mt-2">
+                            <label for="repwd" class="form-label">비밀번호 확인</label>
+                            <input type="password" id="repwd" name="repwd" class="form-control" required>
+                        </div>
+
+                        <!-- 이름 -->
+                        <div class="name mt-2">
+                            <label for="name" class="form-label">이름</label>
+                            <input type="text" id="name" name="name" class="form-control" required>
+                        </div>
+
+                        <!-- 전화번호 -->
+                        <div class="phone mt-2">
+                            <label for="phone" class="form-label">전화번호</label>
+                            <div class="input-group">
+                                <input type="tel" id="phone" name="phone" class="form-control" placeholder="- 없이 입력" required>
+                                <button type="button" class="btn btn-outline-secondary" onclick="checkDuplicatePhone()">중복 확인</button>
+                            </div>
+                        </div>
+
+                        <!-- 이메일 -->
+                        <div class="email mt-2">
+                            <label for="email" class="form-label">이메일</label>
+                            <input type="text" id="email" name="email" class="form-control" placeholder="example@example.com" required>
+                        </div>
+
+                        <!-- 버튼 -->
+                        <div class="btn_box mt-4">
+                            <div class="joinbtn1 mt-2">
+                                <button type="submit" class="form-control btn btn-light btn-outline-dark btn-lg">
+                                    회원가입
+                                </button>
+                            </div>
+                            <div class="joinbtn2 mt-2">
+                                <button type="button" class="form-control btn btn-light btn-outline-dark btn-lg" onclick="location.href='/'">
+                                    홈으로
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+</div>
+
+<!-- JS -->
+<script>
+    function checkDuplicateId() {
+        const userid = document.getElementById("userid").value.trim();
+        const useridRegex = /^[a-zA-Z0-9]{4,12}$/;
+
+        if (!userid) {
+            alert("아이디를 입력하세요.");
+            return;
+        }
+
+        if (!useridRegex.test(userid)) {
+            alert("아이디는 영어와 숫자 조합 4~12자여야 합니다.");
+            return;
+        }
+
+        fetch(`/check-id?userid=${userid}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.exists) {
+                        alert("이미 사용 중인 아이디입니다.");
+                    } else {
+                        alert("사용 가능한 아이디입니다.");
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert("아이디 확인 중 오류가 발생했습니다.");
+                });
+    }
+
+    function checkDuplicatePhone() {
+        const phone = document.getElementById("phone").value.trim();
+        const phoneRegex = /^\d{10,11}$/;
+
+        if (!phoneRegex.test(phone)) {
+            alert("전화번호는 숫자만 입력하며 10~11자여야 합니다.");
+            return;
+        }
+
+        fetch(`/check-phone?phone=${phone}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.exists) {
+                        alert("이미 등록된 전화번호입니다.");
+                    } else {
+                        alert("사용 가능한 전화번호입니다.");
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert("전화번호 확인 중 오류가 발생했습니다.");
+                });
+    }
+
+    function validateForm(event) {
+        event.preventDefault();
+
+        const form = document.getElementById("joinForm");
+
+        const userid = form.userid.value.trim();
+        const pwd = form.pwd.value;
+        const repwd = form.repwd.value;
+        const name = form.name.value.trim();
+        const phone = form.phone.value.trim();
+        const email = form.email.value.trim();
+
+        const useridRegex = /^[a-zA-Z0-9]{4,12}$/;
+        const pwdRegex = /^.{6,14}$/;
+        const phoneRegex = /^\d{10,11}$/;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!useridRegex.test(userid)) {
+            alert("아이디는 영어와 숫자 조합 4~12자여야 합니다.");
+            return false;
+        }
+
+        if (!pwdRegex.test(pwd)) {
+            alert("비밀번호는 6자 이상 14자 이하여야 합니다.");
+            return false;
+        }
+
+        if (pwd !== repwd) {
+            alert("비밀번호가 일치하지 않습니다.");
+            return false;
+        }
+
+        if (!phoneRegex.test(phone)) {
+            alert("전화번호는 숫자만 입력하며 10~11자여야 합니다.");
+            return false;
+        }
+
+        if (!emailRegex.test(email)) {
+            alert("이메일을 확인하세요!");
+            return false;
+        }
+
+        const jsondata = { userid, pwd, name, phone, email };
+
+        fetch('/join', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(jsondata)
+        })
+                .then(async res => {
+                    if (!res.ok) {
+                        const err = await res.json();
+                        alert(err.message || "회원가입에 실패했습니다.");
+                        return;
+                    }
+                    location.href = '/joinok';
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert("오류가 발생했습니다.");
+                });
+
+        return false;
+    }
+
+    function applyFadeIn() {
+        document.body.classList.remove('fadeout');
+        document.body.classList.remove('page-visible');
+        void document.body.offsetWidth;
+        requestAnimationFrame(() => {
+            document.body.classList.add('page-visible');
+        });
+    }
+
+    window.addEventListener('DOMContentLoaded', applyFadeIn);
+    window.addEventListener('pageshow', (e) => {
+        if (e.persisted || performance.getEntriesByType("navigation")[0]?.type === "back_forward") {
+            applyFadeIn();
+        }
+    });
+</script>
+</body>
+</html>

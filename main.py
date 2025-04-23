@@ -1,50 +1,36 @@
 from contextlib import asynccontextmanager
-
 from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from starlette.middleware.sessions import SessionMiddleware
 
 from app.dbfactory import db_startup
-
-
 from app.routes.member import member_router
-
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    db_startup()  # 서버 시작 시 DB 초기화
     yield
-    db_startup()
 
-app = FastAPI()
+app = FastAPI(lifespan=lifespan)  # ✅ lifespan 연동
 
-# 세션처리를 미들웨어 설정
+# 세션 미들웨어
 app.add_middleware(SessionMiddleware, secret_key='02232024duedate')
 
-
-# 외부 route 파일 불러오기
+# 라우터 등록
 app.include_router(member_router)
 
-
-
-# jinja2 설정
-templates = Jinja2Templates(directory='views/templates')
+# 정적 파일 + 템플릿 설정
 app.mount('/static', StaticFiles(directory='views/static'), name='static')
+templates = Jinja2Templates(directory='views/templates')
 
-
-# 서버시작시 디비 생성
-@app.on_event('startup')
-async def on_startup():
-    db_startup()
-
-
-
+# 루트 페이지
 @app.get("/", response_class=HTMLResponse)
 async def index(req: Request):
-    return templates.TemplateResponse('index.html',{'request': req})    # 파일명과 넘길 데이터
+    return templates.TemplateResponse('index.html', {'request': req})
 
-
+# 개발 실행
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("main:app", reload=True)

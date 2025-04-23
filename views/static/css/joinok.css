@@ -22,28 +22,11 @@
     font-size: 24px;
     /*font-weight: bold;*/
 }
-.name2 {
-    font-family: Arial, sans-serif;
-}
 
-.btn_box {
-    display: flex;
-    /*flex-direction: column; !* 수직 정렬 *!*/
-    align-items: center;     /* 가운데 정렬 */
-    gap: 10px;               /* 버튼 간 여백 */
-    margin-top: 30px;
-}
-
-.btn_box > div {
-    width: 100%;             /* 부모 form-control 버튼에 맞춤 */
-    max-width: 300px;        /* 너무 넓어지는 것 방지 */
-}
-
-.btn_box button {
-    font-weight: 700;
+.joinok_box{
+    font-weight: bold;
+    font-size: 40px;
     text-align: center;
-    margin: 0;            /* ✅ 버튼 주변 여백 제거 */
-    vertical-align: middle; /* ✅ 수직 정렬 통일 */
+    text-shadow: 1px 2px 1px black;
+    color: gray;
 }
-
-
